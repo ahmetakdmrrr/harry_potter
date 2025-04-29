@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../controllers/character_controller.dart';
+import '../../domain/models/character.dart';
+import '../widgets/character_card.dart';
+import '../../../../shared/widgets/async_value_widgets.dart';
 
 class CharactersView extends ConsumerWidget {
   const CharactersView({super.key});
@@ -23,102 +26,34 @@ class CharactersView extends ConsumerWidget {
           ),
         ],
       ),
-      body: charactersState.when(
-        data:
-            (characters) => RefreshIndicator(
-              onRefresh:
-                  () =>
-                      ref
-                          .read(characterControllerProvider.notifier)
-                          .refreshCharacters(),
-              child: GridView.builder(
-                padding: const EdgeInsets.all(8),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.75,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: characters.length,
-                itemBuilder: (context, index) {
-                  final character = characters[index];
-                  return Card(
-                    elevation: 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child:
-                              character.image?.isNotEmpty == true
-                                  ? Image.network(
-                                    character.image!,
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const Icon(Icons.person, size: 64),
-                                  )
-                                  : const Icon(Icons.person, size: 64),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  character.name,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  character.house,
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+      body: AsyncValueWidget<List<Character>>(
+        value: charactersState,
+        onRetry: () => ref.read(characterControllerProvider.notifier).refreshCharacters(),
+        emptyMessage: 'Hiç karakter bulunamadı.',
+        data: (characters) => LayoutBuilder(
+          builder: (context, constraints) {
+            int crossAxisCount = 2;
+            if (constraints.maxWidth > 900) {
+              crossAxisCount = 4;
+            } else if (constraints.maxWidth > 600) {
+              crossAxisCount = 3;
+            }
+            return GridView.builder(
+              padding: const EdgeInsets.all(8),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                childAspectRatio: 0.75,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
-            ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error:
-            (error, stack) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Bir hata oluştu: $error',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed:
-                        () =>
-                            ref
-                                .read(characterControllerProvider.notifier)
-                                .loadCharacters(),
-                    child: const Text('Tekrar Dene'),
-                  ),
-                ],
-              ),
-            ),
+              itemCount: characters.length,
+              itemBuilder: (context, index) {
+                final character = characters[index];
+                return CharacterCard(character: character);
+              },
+            );
+          },
+        ),
       ),
     );
   }
