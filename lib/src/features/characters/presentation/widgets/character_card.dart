@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/models/character.dart';
-import '../views/character_detail_view.dart';
+import '../views/character_detail_dialog.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
@@ -11,10 +11,10 @@ class CharacterCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => CharacterDetailView(character: character),
-          ),
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => CharacterDetailDialog(character: character),
         );
       },
       child: Card(
@@ -27,14 +27,16 @@ class CharacterCard extends StatelessWidget {
               flex: 3,
               child: Hero(
                 tag: character.name,
-                child: character.image?.isNotEmpty == true
-                    ? Image.network(
-                        character.image!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.person, size: 64),
-                      )
-                    : const Icon(Icons.person, size: 64),
+                child:
+                    character.image?.isNotEmpty == true
+                        ? Image.network(
+                          character.image!,
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (context, error, stackTrace) =>
+                                  const Icon(Icons.person, size: 64),
+                        )
+                        : const Icon(Icons.person, size: 64),
               ),
             ),
             Expanded(
