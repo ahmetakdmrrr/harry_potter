@@ -1,16 +1,33 @@
-# harry_potter
+Harry Potter Characters Flutter App
+A simple Flutter mobile application that lists Harry Potter characters using the hp-api.onrender.com API.
 
-A new Flutter project.
+Features
+Fetches and displays Harry Potter character data from a public API
+Uses Dio for HTTP requests
+State management with Riverpod
+Responsive and clean UI design
+Error handling and loading indicators
+Modern Flutter best practices (Freezed, DTO, reusable widgets)
+Technologies Used
+Flutter
+Riverpod
+Dio
+Freezed
+JsonSerializable
+Getting Started
+Clone the repository:
 
-## Getting Started
+Install dependencies:
+git clone https://github.com/ahmetakdmrrr/harry_potter.git
+cd harry_potter
 
-This project is a starting point for a Flutter application.
+Run the app:
+flutter run
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Project Structure
+characters: Character domain, data, and presentation layers
+shared: Shared widgets and providers
+main.dart: App entry point
+Screenshots
+![Screenshot_1745925479](https://github.com/user-attachments/assets/f08ef672-9961-46f5-bc86-ada18545abfb)
+![Screenshot_1745925481](https://github.com/user-attachments/assets/0e2ab343-a29b-4701-af3a-4d158af105bc)
