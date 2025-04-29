@@ -8,9 +8,7 @@ class CharacterDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(character.name),
-      ),
+      appBar: AppBar(title: Text(character.name)),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isWide = constraints.maxWidth > 600;
@@ -18,26 +16,31 @@ class CharacterDetailView extends StatelessWidget {
             child: Card(
               margin: const EdgeInsets.all(24),
               elevation: 8,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: isWide
-                    ? Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _CharacterImage(character: character, size: 220),
-                          const SizedBox(width: 32),
-                          Flexible(child: _CharacterDetails(character: character)),
-                        ],
-                      )
-                    : Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _CharacterImage(character: character, size: 180),
-                          const SizedBox(height: 24),
-                          _CharacterDetails(character: character),
-                        ],
-                      ),
+                child:
+                    isWide
+                        ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _CharacterImage(character: character, size: 220),
+                            const SizedBox(width: 32),
+                            Flexible(
+                              child: _CharacterDetails(character: character),
+                            ),
+                          ],
+                        )
+                        : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _CharacterImage(character: character, size: 180),
+                            const SizedBox(height: 24),
+                            _CharacterDetails(character: character),
+                          ],
+                        ),
               ),
             ),
           );
@@ -58,16 +61,21 @@ class _CharacterImage extends StatelessWidget {
       tag: character.name,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size / 2),
-        child: character.image?.isNotEmpty == true
-            ? Image.network(
-                character.image!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    Icon(Icons.person, size: size, color: Colors.grey.shade400),
-              )
-            : Icon(Icons.person, size: size, color: Colors.grey.shade400),
+        child:
+            character.image?.isNotEmpty == true
+                ? Image.network(
+                  character.image!,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.cover,
+                  errorBuilder:
+                      (context, error, stackTrace) => Icon(
+                        Icons.person,
+                        size: size,
+                        color: Colors.grey.shade400,
+                      ),
+                )
+                : Icon(Icons.person, size: size, color: Colors.grey.shade400),
       ),
     );
   }
@@ -110,7 +118,12 @@ class _DetailRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('$label: ', style: const TextStyle(fontWeight: FontWeight.w600)),
-          Flexible(child: Text(value, style: const TextStyle(fontWeight: FontWeight.w400))),
+          Flexible(
+            child: Text(
+              value,
+              style: const TextStyle(fontWeight: FontWeight.w400),
+            ),
+          ),
         ],
       ),
     );

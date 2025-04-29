@@ -26,7 +26,7 @@ class ErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh),
               label: const Text('Tekrar Dene'),
             ),
-          ]
+          ],
         ],
       ),
     );
@@ -77,12 +77,7 @@ class ShimmerLoader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  color: Colors.grey.shade300,
-                ),
-              ),
+              Expanded(flex: 3, child: Container(color: Colors.grey.shade300)),
               Expanded(
                 flex: 2,
                 child: Padding(
@@ -118,7 +113,13 @@ class AsyncValueWidget<T> extends StatelessWidget {
   final Widget Function(T data) data;
   final VoidCallback? onRetry;
   final String? emptyMessage;
-  const AsyncValueWidget({super.key, required this.value, required this.data, this.onRetry, this.emptyMessage});
+  const AsyncValueWidget({
+    super.key,
+    required this.value,
+    required this.data,
+    this.onRetry,
+    this.emptyMessage,
+  });
 
   @override
   Widget build(BuildContext context) {

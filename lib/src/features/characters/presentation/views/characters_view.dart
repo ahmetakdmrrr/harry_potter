@@ -28,32 +28,37 @@ class CharactersView extends ConsumerWidget {
       ),
       body: AsyncValueWidget<List<Character>>(
         value: charactersState,
-        onRetry: () => ref.read(characterControllerProvider.notifier).refreshCharacters(),
+        onRetry:
+            () =>
+                ref
+                    .read(characterControllerProvider.notifier)
+                    .refreshCharacters(),
         emptyMessage: 'Hiç karakter bulunamadı.',
-        data: (characters) => LayoutBuilder(
-          builder: (context, constraints) {
-            int crossAxisCount = 2;
-            if (constraints.maxWidth > 900) {
-              crossAxisCount = 4;
-            } else if (constraints.maxWidth > 600) {
-              crossAxisCount = 3;
-            }
-            return GridView.builder(
-              padding: const EdgeInsets.all(8),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                childAspectRatio: 0.75,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemCount: characters.length,
-              itemBuilder: (context, index) {
-                final character = characters[index];
-                return CharacterCard(character: character);
+        data:
+            (characters) => LayoutBuilder(
+              builder: (context, constraints) {
+                int crossAxisCount = 2;
+                if (constraints.maxWidth > 900) {
+                  crossAxisCount = 4;
+                } else if (constraints.maxWidth > 600) {
+                  crossAxisCount = 3;
+                }
+                return GridView.builder(
+                  padding: const EdgeInsets.all(8),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    childAspectRatio: 0.75,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: characters.length,
+                  itemBuilder: (context, index) {
+                    final character = characters[index];
+                    return CharacterCard(character: character);
+                  },
+                );
               },
-            );
-          },
-        ),
+            ),
       ),
     );
   }
