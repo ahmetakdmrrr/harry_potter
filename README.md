@@ -29,5 +29,5 @@ characters: Character domain, data, and presentation layers
 shared: Shared widgets and providers
 main.dart: App entry point
 Screenshots
-![Screenshot_1745925479](https://github.com/user-attachments/assets/f08ef672-9961-46f5-bc86-ada18545abfb)
-![Screenshot_1745925481](https://github.com/user-attachments/assets/0e2ab343-a29b-4701-af3a-4d158af105bc)
+![Screenshot_1745925479](https://github.com/user-attachments/assets/f08ef672-9961-46f5-bc86-ada18545abfb) ![Screenshot_1745925481](https://github.com/user-attachments/assets/0e2ab343-a29b-4701-af3a-4d158af105bc)
+
